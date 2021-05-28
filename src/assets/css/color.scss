@@ -1,0 +1,39 @@
+// Prefix
+$css-prefix : sh-;
+
+// Color
+$primary-color      : #0673FC; // 主题色
+$dark-color         : #0265E2; // 深色背景，分割线，hover
+$background-color   : #efeff5; // 背景色
+$gradual-color      : #33ddff; // 渐变颜色
+$success-color      : #39BD65;
+$warning-color      : #FFA033;
+$error-color        : #F05656;
+$normal-color       : #354052; // 正常字体颜色
+$unimportance-color : #758193; // 不重要字体颜色
+$placeholder-color  : #b7beca; // 占位颜色，分割线显色
+$link-color         :$primary-color;
+$link-hover-color   : tint($link-color, 20%);
+$link-active-color  : shade($link-color, 5%);
+
+// button color
+$btn-color          :$primary-color;
+$btn-hover-color    :$dark-color;
+$btn-disabled-color :#cdd1d9;
+$btn-disabled-hover-color:#bdc2cc;
+
+// border color
+$border-color       :#d2dae2;
+$border-hover-color :#b9c1c8;
+$border-focus-color :$primary-color;
+
+// Base
+$component-background  : #fff;
+$background-color-base : #efeff5;
+$font-family           : Microsoft YaHei, arial, PingFangSC-Regular, sans-serif;
+$font-size-large       : 14px;
+$font-size-base        : 12px;
+$font-size-small       : 10px;
+
+// Transition
+$transition-time       : .2s;

@@ -1,0 +1,13 @@
+.sh-table table {
+  width: auto; // 解决table-width 渐变拉伸
+}
+.sh-form, .container-wrap {
+  min-height: 36px; // 为了生成容器最小空间
+}
+.container-wrap {
+  border: 1px solid #eee;
+  padding-top: 12px
+}
+.sh-search-header {
+  min-height: auto;
+}

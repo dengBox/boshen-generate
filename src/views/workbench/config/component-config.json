@@ -1,0 +1,460 @@
+{
+  "Table": {
+    "AttributePanel": [
+      {
+        "label": "加载中",
+        "key": "loading",
+        "type": "BusinessSwitch",
+        "attrs": {
+          "value": false
+        }
+      },
+      {
+        "label": "列表字段",
+        "key": "columns",
+        "type": "TableConfig",
+        "attrs": {
+          "value": [
+            {
+              "title": "序号",
+              "type": "index",
+              "width": 60,
+              "fixed": "left",
+              "align": "center"
+            },
+            {
+              "type": "selection",
+              "width": 60,
+              "align": "center"
+            },
+            {
+              "title": "姓名",
+              "align": "center",
+              "key": "name"
+            },
+            {
+              "title": "年龄",
+              "align": "center",
+              "key": "age"
+            },
+            {
+              "title": "电话",
+              "align": "center",
+              "key": "telephone"
+            },
+            {
+              "title": "邮箱",
+              "align": "center",
+              "key": "email"
+            },
+            {
+              "title": "家庭住址",
+              "align": "center",
+              "key": "address",
+              "fixed": "right",
+              "width": 200
+            }
+          ]
+        }
+      },
+      {
+        "label": "数据集",
+        "key": "data",
+        "type": "Select",
+        "attrs": {
+          "value": [
+            {
+              "name": "张三",
+              "age": "18",
+              "telephone": "13201530000",
+              "email": "1716775221@qq.com",
+              "address": "陕西省西安市XXXX"
+            },
+            {
+              "name": "李四",
+              "age": "18",
+              "telephone": "13201530000",
+              "email": "1716775221@qq.com",
+              "address": "陕西省西安市XXXX"
+            },
+            {
+              "name": "王五",
+              "age": "18",
+              "telephone": "13201530000",
+              "email": "1716775221@qq.com",
+              "address": "陕西省西安市XXXX"
+            },
+            {
+              "name": "赵六",
+              "age": "18",
+              "telephone": "13201530000",
+              "email": "1716775221@qq.com",
+              "address": "陕西省西安市XXXX"
+            }
+          ]
+        }
+      }
+    ],
+    "StylePanel": [],
+    "SeniorPanel": []
+  },
+  "Page": {
+    "AttributePanel": [
+      {
+        "label": "总数",
+        "key": "total",
+        "type": "InputNumber",
+        "attrs": {
+          "value": 0
+        }
+      },
+      {
+        "label": "当前页数",
+        "key": "current",
+        "type": "InputNumber",
+        "attrs": {
+          "value": 1
+        }
+      },
+      {
+        "label": "上一页",
+        "key": "prevText",
+        "type": "Input",
+        "attrs": {
+          "value": "上一页"
+        }
+      },
+      {
+        "label": "下一页",
+        "key": "nextText",
+        "type": "Input",
+        "attrs": {
+          "value": "下一页"
+        }
+      }
+    ],
+    "StylePanel": [],
+    "SeniorPanel": [
+      {
+        "label": "pageNum修改事件",
+        "key": "current-change",
+        "type": "code",
+        "attrs": {
+          "methods": "(pageNum) { this.pageData.pageNum = pageNum \n this.search() \n}"
+        }
+      },
+      {
+        "label": "pageSize修改事件",
+        "key": "on-page-size-chang",
+        "type": "code",
+        "attrs": {
+          "methods": "(pageSize) { this.pageData.pageNum = 1 \n this.pageData.pageSize = pageSize \n this.search()}"
+        }
+      }
+    ]
+  },
+  "Form": {
+    "AttributePanel": [
+      {
+        "label": "行内表单",
+        "key": "inline",
+        "type": "BusinessSwitch",
+        "attrs": {
+          "value": false
+        }
+      },
+      {
+        "label": "label位置",
+        "key": "labelPosition",
+        "type": "SelectConfig",
+        "attrs": {
+          "value": "left",
+          "data": [
+            {
+              "label": "left",
+              "value": "left"
+            },
+            {
+              "label": "right",
+              "value": "right"
+            },
+            {
+              "label": "top",
+              "value": "top"
+            }
+          ]
+        }
+      },
+      {
+        "label": "label宽度",
+        "key": "labelWidth",
+        "type": "Input",
+        "attrs": {
+          "value": 80
+        }
+      }
+    ],
+    "StylePanel": [],
+    "SeniorPanel": []
+  },
+  "Container": {
+    "AttributePanel": []
+  },
+  "SearchHeader": {
+    "AttributePanel": [
+      {
+        "label": "重置按钮",
+        "key": "showReset",
+        "type": "BusinessSwitch",
+        "attrs": {
+          "value": true
+        }
+      },
+      {
+        "label": "搜索条目",
+        "key": "formModel",
+        "type": "SearchHeaderConfig",
+        "attrs": {
+          "value": [
+            {
+              "label": "用户名称",
+              "key": "userName",
+              "type": "Input",
+              "rules": [],
+              "props": {
+                "value": "db",
+                "placeholder": "请输入用户名"
+              }
+            },
+            {
+              "label": "开户时间",
+              "key": "time",
+              "type": "TimePicker",
+              "props": {
+                "value": "",
+                "placeholder": "请选择开户时间"
+              }
+            },
+            {
+              "label": "电话号码",
+              "key": "telephone",
+              "type": "Input",
+              "props": {
+                "value": "",
+                "placeholder": "请输入用户电话"
+              }
+            },
+            {
+              "label": "出生地区",
+              "key": "adress",
+              "type": "Cascader",
+              "props": {
+                "data": [
+                  {
+                    "value": "ShanXi",
+                    "label": "陕西",
+                    "children": [
+                      {
+                        "value": "XiAn",
+                        "label": "西安",
+                        "children": [
+                          {
+                            "value": "XiAn",
+                            "label": "西安",
+                            "children": []
+                          },
+                          {
+                            "value": "XinCheng",
+                            "label": "新城",
+                            "children": []
+                          },
+                          {
+                            "value": "BeiLin",
+                            "label": "碑林",
+                            "children": []
+                          },
+                          {
+                            "value": "LianHu",
+                            "label": "莲湖",
+                            "children": []
+                          },
+                          {
+                            "value": "BaQiao",
+                            "label": "灞桥",
+                            "children": []
+                          },
+                          {
+                            "value": "WeiYang",
+                            "label": "未央",
+                            "children": []
+                          },
+                          {
+                            "value": "YanTa",
+                            "label": "雁塔",
+                            "children": []
+                          },
+                          {
+                            "value": "YanLiang",
+                            "label": "阎良",
+                            "children": []
+                          },
+                          {
+                            "value": "LinTong",
+                            "label": "临潼",
+                            "children": []
+                          },
+                          {
+                            "value": "ChangAn",
+                            "label": "长安",
+                            "children": []
+                          },
+                          {
+                            "value": "GaoLing",
+                            "label": "高陵",
+                            "children": []
+                          },
+                          {
+                            "value": "HuYi",
+                            "label": "鄠邑",
+                            "children": []
+                          },
+                          {
+                            "value": "LanTian",
+                            "label": "蓝田",
+                            "children": []
+                          },
+                          {
+                            "value": "ZhouZhi",
+                            "label": "周至",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "value": ["BeiJing", "BeiJing", "DongCheng"]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "StylePanel": [],
+    "SeniorPanel": []
+  },
+  "Input": {
+    "AttributePanel": [
+      {
+        "label": "标题",
+        "key": "title",
+        "type": "Input",
+        "attrs": {
+          "value": "输入框"
+        }
+      },
+      {
+        "label": "占位提示",
+        "key": "placeholder",
+        "type": "Input",
+        "attrs": {
+          "value": "请输入文字"
+        }
+      },
+      {
+        "label": "禁用",
+        "key": "disabled",
+        "type": "BusinessSwitch",
+        "attrs": {
+          "value": false
+        }
+      }
+    ],
+    "StylePanel": [],
+    "SeniorPanel": []
+  },
+  "Select": {
+    "AttributePanel": [
+      {
+        "label": "占位提示",
+        "key": "placeholder",
+        "type": "Input",
+        "attrs": {
+          "value": "请输入文字"
+        }
+      },
+      {
+        "label": "禁用",
+        "key": "disabled",
+        "type": "BusinessSwitch",
+        "attrs": {
+          "value": false
+        }
+      }
+    ],
+    "StylePanel": [],
+    "SeniorPanel": []
+  },
+  "InputNumber": {
+    "AttributePanel": [
+      {
+        "label": "最小值",
+        "key": "min",
+        "type": "InputNumber",
+        "attrs": {
+          "value": 0
+        }
+      },
+      {
+        "label": "最大值",
+        "key": "max",
+        "type": "InputNumber",
+        "attrs": {
+          "value": 10
+        }
+      },
+      {
+        "label": "步长",
+        "key": "step",
+        "type": "InputNumber",
+        "attrs": {
+          "value": 1
+        }
+      },
+      {
+        "label": "禁用",
+        "key": "disabled",
+        "type": "BusinessSwitch",
+        "attrs": {
+          "value": false
+        }
+      }
+    ],
+    "StylePanel": [],
+    "SeniorPanel": []
+  },
+  "Radio": {
+    "AttributePanel": []
+  },
+  "Checkbox": {
+    "AttributePanel": []
+  },
+  "ShSwitch": {
+    "AttributePanel": []
+  },
+  "DatePicker": {
+    "AttributePanel": []
+  },
+  "TimePicker": {
+    "AttributePanel": []
+  },
+  "Cascader": {
+    "AttributePanel": []
+  },
+  "CascaderEasy": {
+    "AttributePanel": []
+  },
+  "Upload": {
+    "AttributePanel": []
+  }
+}

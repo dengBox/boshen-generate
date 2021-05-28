@@ -1,0 +1,90 @@
+@import "./color.scss";
+@import "./reset.scss";
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, form, fieldset, legend, button, input, textarea, th, td {
+  margin    : 0;
+  padding   : 0;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+}
+
+ul, ol {
+  list-style: none;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color          : rgba(51, 119, 255, 1);
+}
+
+a:hover {
+  text-decoration: underline;
+  cursor         : pointer !important;
+}
+
+table {
+  border-spacing : 0;
+  box-sizing     : border-box;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+body {
+  color     : $normal-color;
+  font      : #{$font-size-base} / 1.5 $font-family;
+  overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d0d5dd;
+  border-radius: 4px;
+}
+
+// ::-webkit-scrollbar-thumb:hover {
+//   cursor: pointer;
+// }
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.status-wrap {
+  display        : flex;
+  flex-direction : column;
+  align-items    : center;
+  justify-content: center;
+  width          : 100%;
+  height         : 100%;
+  background     : $component-background;
+}
+
+
+// 最优尺寸
+@media only screen and (min-width: 1681px) {
+
+}
+
+// 中型尺寸
+@media only screen and (max-width: 1680px) and (min-width: 1281px) {
+
+}
+
+// 最小尺寸
+@media only screen and (max-width: 1280px) {
+
+}

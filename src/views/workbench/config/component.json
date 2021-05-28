@@ -1,0 +1,106 @@
+[
+  {
+    "title": "表单控件",
+    "key": "form",
+    "isReal": false,
+    "children": [
+      {
+        "title": "文本输入框",
+        "componentName": "Input",
+        "icon": "",
+        "smallIcon": ""
+      },
+      {
+        "title": "下拉选择器",
+        "componentName": "Select",
+        "icon": ""
+      },
+      {
+        "title": "数字输入框",
+        "componentName": "InputNumber",
+        "icon": ""
+      },
+      {
+        "title": "单选框",
+        "componentName": "Radio",
+        "icon": ""
+      },
+      {
+        "title": "多选框",
+        "componentName": "Checkbox",
+        "icon": ""
+      },
+      {
+        "title": "开关",
+        "componentName": "ShSwitch",
+        "icon": ""
+      },
+      {
+        "title": "日期选择器",
+        "componentName": "DatePicker",
+        "icon": ""
+      },
+      {
+        "title": "时间选择器",
+        "componentName": "TimePicker",
+        "icon": ""
+      },
+      {
+        "title": "级联选择器",
+        "componentName": "Cascader",
+        "icon": ""
+      },
+      {
+        "title": "轻量级联",
+        "componentName": "CascaderEasy",
+        "icon": ""
+      },
+      {
+        "title": "上传选择器",
+        "componentName": "Upload",
+        "icon": ""
+      }
+    ]
+  },
+  {
+    "title": "普通组件",
+    "key": "ordinary",
+    "isReal": false,
+    "children": [
+      {
+        "title": "基础表格",
+        "componentName": "Table",
+        "icon": ""
+      },
+      {
+        "title": "表格分页",
+        "componentName": "Page",
+        "icon": ""
+      }
+    ]
+  },
+  {
+    "title": "高级控件",
+    "key": "senior",
+    "isReal": false,
+    "children": [
+      {
+        "title": "容器",
+        "componentName": "Container",
+        "isContainer": true,
+        "icon": ""
+      },
+      {
+        "title": "基础表单",
+        "componentName": "Form",
+        "isContainer": true,
+        "icon": ""
+      },
+      {
+        "title": "顶部搜索",
+        "componentName": "SearchHeader",
+        "icon": ""
+      }
+    ]
+  }
+]

@@ -1,0 +1,65 @@
+{
+  "name": "auto-generate",
+  "version": "1.0.0",
+  "private": false,
+  "description": "自助设计生成代码",
+  "author": "dengbo <1716775221@qq.com>",
+  "scripts": {
+    "lint": "vue-cli-service lint",
+    "serve": "vue-cli-service serve",
+    "test": "vue-cli-service build --mode test",
+    "build": "vue-cli-service build",
+    "build-uat": "vue-cli-service build --mode uat",
+    "build-dev": "vue-cli-service build --mode development --report --report-json",
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locale/**/*.js'"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "core-js": "^3.3.2",
+    "dayjs": "^1.10.4",
+    "echarts": "^4.4.0",
+    "file-saver": "^2.0.5",
+    "node-sass": "^4.0.0",
+    "nprogress": "^0.2.0",
+    "shsc-business-ui": "^1.3.5",
+    "shsc-ui": "^3.4.92",
+    "vue": "^2.6.10",
+    "vue-i18n": "^8.0.0",
+    "vue-router": "^3.1.3",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.0.0",
+    "@vue/cli-plugin-eslint": "^4.0.0",
+    "@vue/cli-plugin-router": "^4.0.5",
+    "@vue/cli-plugin-vuex": "^4.0.5",
+    "@vue/cli-service": "^4.0.0",
+    "babel-eslint": "^10.0.3",
+    "babel-plugin-import": "^1.13.0",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-vue": "^5.0.0",
+    "imports-loader": "^0.8.0",
+    "sass-loader": "^9.0.0",
+    "vue-cli-plugin-axios": "0.0.4",
+    "vue-cli-plugin-i18n": "^0.6.0",
+    "vue-cli-plugin-moment": "^0.1.1",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
+  "gitHooks": {
+    "pre-commit": "npm run lint"
+  }
+}

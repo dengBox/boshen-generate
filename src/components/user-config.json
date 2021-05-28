@@ -1,0 +1,96 @@
+{
+  "layout": {
+    "attrs": {
+      "padding": {
+        "top": 14,
+        "right": 14,
+        "bottom": 14,
+        "left": 14
+      },
+      "component_margin": {
+        "top": 14,
+        "right": 14,
+        "bottom": 14,
+        "left": 14
+      }
+    },
+    "style": {},
+    "senior": {
+    }
+  },
+  "component": {
+    "Input": {
+      "style": {},
+      "attrs": {
+        "placeholder": "请输入内容"
+      }
+    },
+    "Table": {
+      "attrs": {
+        "columns": [
+          {
+            "type": "index",
+            "width": 60,
+            "align": "center"
+          },
+          {
+            "type": "selection",
+            "width": 60,
+            "align": "center"
+          },
+          {
+            "title": "姓名",
+            "key": "name"
+          },
+          {
+            "title": "年龄",
+            "key": "age"
+          },
+          {
+            "title": "身高",
+            "key": "height"
+          },
+          {
+            "title": "家庭地址",
+            "key": "address"
+          },
+          {
+            "title": "联系电话",
+            "key": "telephone"
+          }
+        ],
+        "data": [
+          {
+            "name": "张三",
+            "age": 18,
+            "height": 180,
+            "address": "陕西省西安市XXXX",
+            "telephone": 13201530000
+          },
+          {
+            "name": "张三1",
+            "age": 19,
+            "height": 180,
+            "address": "陕西省西安市XXXX",
+            "telephone": 13201530000
+          },
+          {
+            "name": "张三2",
+            "age": 20,
+            "height": 180,
+            "address": "陕西省西安市XXXX",
+            "telephone": 13201530000
+          },
+          {
+            "name": "张三3",
+            "age": 21,
+            "height": 180,
+            "address": "陕西省西安市XXXX",
+            "telephone": 13201530000
+          }
+        ]
+      }
+    }
+  },
+  "language": {}
+}
