@@ -17,6 +17,7 @@
         @on-drop-end="dropEnd"
         @on-add-panel="addPanel"
         @on-copy-panel="copyPanel"
+        @on-move-panel="dropStart"
         @on-delete-panel="delPanel"
         @on-change-tree="changeTree"
         @on-change-active="changeActivePanel"
@@ -213,9 +214,12 @@ export default {
   }
   &-move {
     cursor: move;
-    .center-panel {
-      border: 1px solid #0673FC;
-    }
+    // .center-panel {
+    //   border: 1px solid #0673FC;
+    // }
   }
+}
+.workbench-wrap {
+  user-select: none;
 }
 </style>

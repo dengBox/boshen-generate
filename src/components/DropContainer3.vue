@@ -1,46 +1,7 @@
-<template>
-  <ul class="container-wrap panel-items" ref="container">
-    <li
-      :class="countClass(panel)"
-      v-for="(panel, i) in panelList" :key="panel._id"
-      @mousedown.stop="movePanel(panel, i)"
-      @click.stop="emitActivePanel(panel)" >
-      <component
-        v-if="!panel.children"
-        :is="panel.componentName"
-        v-bind="panel._attrs" />
-      <drop-container
-        v-else
-        :stack="stack"
-        :panel="panel"
-        :preview="preview"
-        :active-panel="activePanel"
-        :common-data="commonData"
-        :panel-list="panel.children" />
-      <div class="empty tool-wrap" v-if="panel._id === activePanel._id" @mousedown.stop>
-        <div class="tool-btns">
-          <Tooltip :content="btn.label" placement="bottom" v-for="btn in panelBtn" :key="btn.key">
-            <Icon :type="btn.icon" @click="operation(btn.key, panel)" />
-          </Tooltip>
-        </div>
-      </div>
-      <div class="empty empty-wrap"></div>
-    </li>
-    <li class="empty-contet panel-items" v-if="panelList.length < 1">
-      请拖入组件
-      <div class="empty empty-wrap"></div>
-    </li>
-  </ul>
-</template>
-
 <script>
 import { on, off } from '@/assets/js/dom.js'
-
-/**
- * CenterPanel改为Layout即可实现组件容器多级嵌套
- * 1. 递归向上寻找组件名，组成dom树
- * 2. 每一个layout可嵌套多个平级组件、包括layout本身
- */
+import FormContainer from '@/components/FormContainer'
+import DropTool from '@/components/DropTool'
 
 export default {
   name: 'DropContainer',
@@ -64,31 +25,27 @@ export default {
       }
     }
   },
+  components: {
+    DropTool,
+    FormContainer
+  },
   data () {
     return {
-      panelBtn: Object.freeze([
-        {
-          label: '复制',
-          icon: 'icon-new',
-          key: 'copy'
-        },
-        {
-          label: '删除',
-          icon: 'icon-delete',
-          key: 'delete'
-        }
-      ]),
-      hoverStack: this.commonData.hoverStack
+      // hoverStack: this.commonData.hoverStack
     }
   },
   computed: {
     wrap () {
-      return this.$refs.container
+      return this.$refs.container.$el || this.$refs.container
     }
   },
-  watch: {
-  },
-  created () {
+  render () {
+    return (
+      <div class="container-wrap" ref="container">{this.renderInner()}</div>
+      // this.panel.componentName
+      //   ? <this.panel.componentName class="container-wrap min-content" ref="container">{this.renderInner()}</this.panel.componentName>
+      //   : <div class="container-wrap min-content" ref="container">{this.renderInner()}</div>
+    )
   },
   mounted () {
     if (this.preview) return
@@ -103,10 +60,50 @@ export default {
     off(this.wrap, 'mouseleave', this.leaveWrap)
   },
   methods: {
+    renderInner () {
+      return this.panelList.length > 0
+        ? this.panelList.map((p, i) => {
+          return <div
+            class={this.countClass(p)}
+            vOn:mousedown_stop={() => this.movePanel(p, i)}
+            vOn:click_stop={() => this.emitActivePanel(p)}>
+            {
+              p.componentName
+                ? (
+                  <p.componentName
+                    panel={p}
+                    active-panel={this.activePanel}
+                    common-data={this.commonData}
+                    preview={this.preview}
+                    panel-list={p.children || []}
+                    {...{ props: p._attrs }} />
+                )
+                : (
+                  <drop-container
+                    stack={this.stack}
+                    panel={p}
+                    preview={this.preview}
+                    active-panel={this.activePanel}
+                    common-data={this.commonData}
+                    panel-list={p.children} />
+                )
+            }
+            {
+              p._id === this.activePanel._id &&
+              <drop-tool panel={p} on-on-operation={this.emitEvent} />
+            }
+          </div>
+        })
+        : (
+          <div class="empty-contet min-content">
+              请拖入组件
+            <div class="empty empty-wrap"></div>
+          </div>
+        )
+    },
     countClass (panel) {
       return [
         'panel-item',
-        'panel-items',
         {
           'panel-item-active': panel._id === this.activePanel._id,
           'panel-item-empty': panel.children && panel.children.length < 1
@@ -135,37 +132,18 @@ export default {
       this.emitEvent('on-move-panel', { source: this.panel, panel, index })
     },
     emitActivePanel (panel) {
+      // 如果是移动中，则不需要激活panel
       if (this.preview || panel._id === this.activePanel._id) return
       this.emitEvent('on-change-active', panel)
-    },
-    operation (type, panel) {
-      /**
-       * 删除 复制，应该在对应panel下，因为有层级的概念
-       */
-      switch (type) {
-        case 'delete':
-          this.emitEvent('on-delete-panel', panel)
-          break
-        case 'copy':
-          this.emitEvent('on-copy-panel', panel) // id在父组件进行赋值
-          break
-      }
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-// .container-wrap {
-//   position: relative;
-//   z-index: 99;
-// }
 .panel-wrap {
-  // width: 100%;
-  // height: 100%;
-  // overflow: auto;
   background: #fff;
-  .panel-item {
+  ::v-deep .panel-item {
     margin-bottom: 14px;
     position: relative;
     cursor: pointer;
@@ -193,12 +171,6 @@ export default {
       background: rgba(51, 119, 255, .08);
       border: 1px dashed #397AFD;
     }
-    // &:hover {
-    //   border-color: transparent;x
-    //   & > .empty-wrap {
-    //     display: block;
-    //   }
-    // }
     &-active {
       border-color: #397AFD;
       .empty-wrap {
@@ -210,7 +182,7 @@ export default {
       .empty-contet {
         top: 0;
         left: 0;
-        content: "请拖入组件";
+        content: "";
         width: 100%;
         height: 100%;
         cursor: pointer;

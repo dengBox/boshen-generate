@@ -11,6 +11,7 @@
       :drop-panel="dropPanel"
       @on-add-stack="addStack"
       @on-del-stack="delStack"
+      @on-move-panel="movePanel"
       @on-delete-panel="delPanel"
       @on-copy-panel="copyPanel"
       @on-change-active="emitActivePanel" />
@@ -19,7 +20,7 @@
 
 <script>
 import { on, off } from '@/assets/js/dom.js'
-import DropContainer from '@/components/DropContainer'
+import DropContainer from '@/components/DropContainer3'
 import componentConfig from '@/views/workbench/config/component-config.json'
 import { deepChange, deepDomHandle } from './untils'
 /**
@@ -27,6 +28,19 @@ import { deepChange, deepDomHandle } from './untils'
  * 2. 每一个layout可嵌套多个平级组件
  */
 let panelId = new Date().getTime()
+
+/**
+ * child: 嵌套的组件名
+ * content: 可嵌套的组件
+ */
+
+const nestedModels = {
+  FormContainer: {
+    child: ['FormItem'],
+    content: ['Input', 'Select', 'InputNumber', 'Radio', 'Checkbox', 'ShSwitch', 'DatePicker', 'TimePicker', 'Cascader', 'CascaderEasy']
+  }
+}
+
 export default {
   name: 'CenterPanel',
   props: {
@@ -78,6 +92,9 @@ export default {
     delPanel (panel) {
       this.$emit('on-delete-panel', panel)
     },
+    movePanel (panel) {
+      this.$emit('on-move-panel', panel)
+    },
     copyPanel (panel) {
       /**
        * 1. 自身以及所有后代_id自增一
@@ -94,9 +111,8 @@ export default {
     },
     leaveWrap () {
       this.stack = []
-      if (this.lastActiveChild) {
-        this.lastActiveChild.style.display = 'none'
-      }
+      if (this.lastActiveChild) this.lastActiveChild.style.display = 'none'
+      if (this.dropIndex) this.dropIndex = null
       off(this.wrap.$el, 'mousemove', this.dropMove)
     },
     dropMove (event) {
@@ -125,19 +141,25 @@ export default {
          *   b: 左
          *   b: 右
          */
+        this.dropIndex = 1
+        // console.log('dropMove', this.dropPanel)
       } else {
         deepDomHandle([...currentWrap.el.children], event, currentWrap, activeNode => {
-          if (!activeNode) {
-            if (this.lastActiveChild) {
-              this.lastActiveChild.style.display = 'none'
-            }
-          } else {
-            if (this.lastActiveChild && this.lastActiveChild !== activeNode) {
-              this.lastActiveChild.style.display = 'none'
-            }
-            activeNode.style.display = 'block'
-            if (this.lastActiveChild !== activeNode) this.lastActiveChild = activeNode
-          }
+          console.log(activeNode)
+          // if (!activeNode) {
+          //   if (this.lastActiveChild) {
+          //     this.lastActiveChild.style.display = 'none'
+          //   }
+          // } else {
+          //   /**
+          //    * 判断其父级是否是active状态，是的话则去掉父组件border
+          //    */
+          //   if (this.lastActiveChild && this.lastActiveChild !== activeNode) {
+          //     this.lastActiveChild.style.display = 'none'
+          //   }
+          //   activeNode.style.display = 'block'
+          //   if (this.lastActiveChild !== activeNode) this.lastActiveChild = activeNode
+          // }
         })
       }
     },
@@ -149,13 +171,22 @@ export default {
        * 3. 拿到组件初始配置，进行配置更新，赋值给组件
        */
       this.$emit('on-drop-end')
-      if (this.stack.length < 1) return
-      const panel = this.dropPanel._id ? this.dropPanel : this.initPanel()
+      if (this.stack.length < 1 || !this.dropIndex) return
+      const panel = this.dropPanel.panel ? this.dropPanel.panel : this.initPanel()
+      if (this.dropPanel.panel && !this.dropIndex && this.stack[0].panel._id === this.dropPanel.source._id && this.dropPanel.index === this.dropIndex) return
+      if (this.dropPanel.panel) {
+        // console.log('dropEnd', this.dropPanel.panel.componentName)
+        /**
+         * 删除原有panel
+         */
+        this.dropPanel.source.splice(this.dropPanel.index, 1)
+      }
       this.$emit('on-add-panel', {
         target: this.stack[0].panel._id === -1 ? undefined : this.stack[0].panel,
         panel,
         index: this.dropIndex
       })
+      this.dropIndex = null
       this.emitActivePanel(panel)
     },
     initPanel () {
@@ -164,23 +195,41 @@ export default {
        * 2. 混入业务代码
        * 3. 如拖放的容器为form && 拖拽的panel为表单控件，需进行特殊处理
        */
-      const config = componentConfig[this.dropPanel.componentName]
+      let parent = null
+      const child = nestedModels[this.stack[0].panel.componentName]
+      const config = this.$untils.deepCopy(componentConfig[this.dropPanel.componentName])
       const result = {
         _id: ++panelId, // id
         _attrs: {},
-        componentName: this.dropPanel.componentName, // 组件类型
-        config: this.$untils.deepCopy(config)
+        componentName: this.dropPanel.componentName !== 'Container' ? this.dropPanel.componentName : null, // 组件类型
+        config: config
       }
       config.AttributePanel.forEach(c => {
         // 配置组件的value值
         result._attrs[c.key] = c.attrs.value
       })
       if (this.dropPanel.isContainer) {
-        // 容器组件特有属性
         result.children = []
       }
+      if (child && child.content.some(c => c === this.dropPanel.componentName)) {
+        /**
+         * 1. 父组件和子组件绑定同一个config对象
+         * 2. childrenpush真正的组件对象
+         * 3. activePanel设置为子组件
+         * 4. 给父级的_attr增加特有属性配置（Form -> model <--> rule）
+         */
+        parent = {
+          _id: ++panelId,
+          componentName: child.child[0], // 目前获取第一个数组
+          _attrs: result._attrs, // 通过子组件的属性进行过滤
+          config: config,
+          children: [result],
+          _isAuto: true // 是生成的组件
+        }
+      }
+      // console.log('initPanel', parent)
       // console.log('initPanel', result)
-      return result
+      return parent || result
     },
     emitActivePanel (panel) {
       if (panel._id === this.activePanel._id) return

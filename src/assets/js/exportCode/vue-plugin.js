@@ -32,9 +32,13 @@ class CodeReplace {
        * 2. 变量名生成真正对象，塞入javascript
        *      a: data
        *      b: methods
+       * 3. 如果是（嵌套、容器）组件，需要特殊处理
        */
       let attrs = ''
       Object.keys(ast.attrs).forEach(k => {
+        /**
+         * 对formitem form等组件，特殊配置
+         */
         let v = this.variable.get(k)
         if (v) {
           const temp = v.split('_')
@@ -44,6 +48,9 @@ class CodeReplace {
           v = `${ast.componentName[0].toLowerCase()}${ast.componentName.slice(1)}${k[0].toUpperCase()}${k.slice(1)}_1`
         }
         this.variable.set(k, v)
+        /**
+         * 1. 值为[string, number]，可直接赋值(赋值会失去活性)
+         */
         attrs += `:${k}="${v}" `
         this.code.data[v] = ast.attrs[k]
       })
@@ -102,6 +109,7 @@ class CodeReplace {
   }
 
   replace (ast) {
+    console.log(ast)
     this.init(ast)
     return `<template>
     ${this.setTemplate(this.ast)}

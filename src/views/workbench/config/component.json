@@ -54,11 +54,6 @@
         "title": "轻量级联",
         "componentName": "CascaderEasy",
         "icon": ""
-      },
-      {
-        "title": "上传选择器",
-        "componentName": "Upload",
-        "icon": ""
       }
     ]
   },
@@ -85,14 +80,14 @@
     "isReal": false,
     "children": [
       {
-        "title": "容器",
-        "componentName": "Container",
+        "title": "基础表单",
+        "componentName": "FormContainer",
         "isContainer": true,
         "icon": ""
       },
       {
-        "title": "基础表单",
-        "componentName": "Form",
+        "title": "容器",
+        "componentName": "Container",
         "isContainer": true,
         "icon": ""
       },

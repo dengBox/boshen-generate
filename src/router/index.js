@@ -7,7 +7,6 @@ import 'nprogress/nprogress.css'
 
 // 引入路由
 import Common from '@/views/Common.vue'
-import NotFound from '@/components/status/404.vue'
 
 NProgress.configure({ showSpinner: false })
 
@@ -38,7 +37,7 @@ const router = new VueRouter({
     {
       path: '/',
       // redirect: '/login'
-      redirect: '/workbench'
+      redirect: '/home/workbench'
     },
     {
       path: '/login',
@@ -51,11 +50,6 @@ const router = new VueRouter({
       children: [
         ...routerList
       ]
-    },
-    {
-      path: '*',
-      name: '404',
-      component: NotFound
     }
   ]
 })

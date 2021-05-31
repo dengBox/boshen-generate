@@ -83,6 +83,7 @@ export default {
        * 2. 仅做逻辑处理，真正更新交给Index
        * 3. key应该是一个数组，链条去寻找。目前写死层级
        * 4. 全局config----
+       * 5. 考虑裙带关系组件的场景
        */
       // const config = this.activeConfig[panel][index]
       // config.attrs.value = value

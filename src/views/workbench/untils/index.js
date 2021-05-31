@@ -49,6 +49,11 @@ export function deepDomHandle (arr, event, currentWrap, cb, r) {
     position.right >= event.clientX
   })
   if (result) {
+    /**
+     * 1. panel-item // 子组件容器
+     * 2. container-wrap // 容器组件
+     * 3. panel-item-empty // 空子组件容器
+     */
     let activeNode = null
     if (result.className.indexOf('panel-items') !== -1) {
       if (result.tagName === 'UL') {

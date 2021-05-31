@@ -153,7 +153,7 @@
       }
     ]
   },
-  "Form": {
+  "FormContainer": {
     "AttributePanel": [
       {
         "label": "行内表单",
@@ -346,8 +346,9 @@
   "Input": {
     "AttributePanel": [
       {
+        "isParent": true,
         "label": "标题",
-        "key": "title",
+        "key": "label",
         "type": "Input",
         "attrs": {
           "value": "输入框"
@@ -376,6 +377,15 @@
   "Select": {
     "AttributePanel": [
       {
+        "isParent": true,
+        "label": "标题",
+        "key": "label",
+        "type": "Input",
+        "attrs": {
+          "value": "下拉框"
+        }
+      },
+      {
         "label": "占位提示",
         "key": "placeholder",
         "type": "Input",
@@ -397,6 +407,15 @@
   },
   "InputNumber": {
     "AttributePanel": [
+      {
+        "isParent": true,
+        "label": "标题",
+        "key": "label",
+        "type": "Input",
+        "attrs": {
+          "value": "数字输入框"
+        }
+      },
       {
         "label": "最小值",
         "key": "min",
@@ -434,10 +453,30 @@
     "SeniorPanel": []
   },
   "Radio": {
-    "AttributePanel": []
+    "AttributePanel": [
+      {
+        "isParent": true,
+        "label": "标题",
+        "key": "label",
+        "type": "Input",
+        "attrs": {
+          "value": "单选框"
+        }
+      }
+    ]
   },
   "Checkbox": {
-    "AttributePanel": []
+    "AttributePanel": [
+      {
+        "isParent": true,
+        "label": "标题",
+        "key": "label",
+        "type": "Input",
+        "attrs": {
+          "value": "复选框"
+        }
+      }
+    ]
   },
   "ShSwitch": {
     "AttributePanel": []

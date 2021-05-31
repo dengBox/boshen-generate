@@ -1,46 +1,5 @@
-<template>
-  <ul class="container-wrap panel-items" ref="container">
-    <li
-      :class="countClass(panel)"
-      v-for="(panel, i) in panelList" :key="panel._id"
-      @mousedown.stop="movePanel(panel, i)"
-      @click.stop="emitActivePanel(panel)" >
-      <component
-        v-if="!panel.children"
-        :is="panel.componentName"
-        v-bind="panel._attrs" />
-      <drop-container
-        v-else
-        :stack="stack"
-        :panel="panel"
-        :preview="preview"
-        :active-panel="activePanel"
-        :common-data="commonData"
-        :panel-list="panel.children" />
-      <div class="empty tool-wrap" v-if="panel._id === activePanel._id" @mousedown.stop>
-        <div class="tool-btns">
-          <Tooltip :content="btn.label" placement="bottom" v-for="btn in panelBtn" :key="btn.key">
-            <Icon :type="btn.icon" @click="operation(btn.key, panel)" />
-          </Tooltip>
-        </div>
-      </div>
-      <div class="empty empty-wrap"></div>
-    </li>
-    <li class="empty-contet panel-items" v-if="panelList.length < 1">
-      请拖入组件
-      <div class="empty empty-wrap"></div>
-    </li>
-  </ul>
-</template>
-
 <script>
 import { on, off } from '@/assets/js/dom.js'
-
-/**
- * CenterPanel改为Layout即可实现组件容器多级嵌套
- * 1. 递归向上寻找组件名，组成dom树
- * 2. 每一个layout可嵌套多个平级组件、包括layout本身
- */
 
 export default {
   name: 'DropContainer',
@@ -83,26 +42,93 @@ export default {
   },
   computed: {
     wrap () {
-      return this.$refs.container
+      return this.$refs.container.$el || this.$refs.container
     }
   },
-  watch: {
-  },
-  created () {
+  render () {
+    return (
+      this.panel.componentName
+        ? (
+          <this.panel.componentName
+            class="container-wrap panel-items"
+            ref="container" >
+            {this.renderInner()}
+          </this.panel.componentName>
+        )
+        : (
+          <div class="container-wrap panel-items" ref="container">
+            {this.renderInner()}
+          </div>
+        )
+    )
   },
   mounted () {
-    if (this.preview) return
     // 开启事件监听
     on(this.wrap, 'mouseenter', this.enterWrap)
     on(this.wrap, 'mouseleave', this.leaveWrap)
   },
   destroyed () {
-    if (this.preview) return
     // 关闭事件监听
     off(this.wrap, 'mouseenter', this.enterWrap)
     off(this.wrap, 'mouseleave', this.leaveWrap)
   },
   methods: {
+    renderInner () {
+      return this.panelList.length > 0
+        ? this.panelList.map((p, i) => {
+          return p.componentName
+            ? (
+              <p.componentName
+                {...{ props: p._attrs }}
+                class={this.countClass(p)}
+                vOn:mousedown_native_stop={() => this.movePanel(p, i)}
+                vOn:click_native_stop={() => this.emitActivePanel(p)}
+                vOn:mouseenter_native_stop={event => { this.enterWrap(event, p) }}
+                vOn:mouseleave_native_stop={event => { this.leaveWrap(event, p) }} >
+                {
+                  p.children && p.children.map((c, i) => {
+                    /**
+                     * 1. 事件触发有问题
+                     * 2. 渲染的不一定是容器
+                     */
+                    return c.children
+                      ? <drop-container
+                        stack={this.stack}
+                        panel={c}
+                        preview={this.preview}
+                        active-panel={this.activePanel}
+                        common-data={this.commonData}
+                        panel-list={c.children} />
+                      : <c.componentName
+                        {...{ props: c._attrs }}
+                        vOn:mousedown_native_stop={() => this.movePanel(c, i)}
+                        vOn:click_native_stop={() => this.emitActivePanel(c)}
+                        vOn:mouseenter_native_stop={event => { this.enterWrap(event, c) }}
+                        vOn:mouseleave_native_stop={event => { this.leaveWrap(event, c) }} />
+                  })
+                }
+              </p.componentName>
+            )
+            : (
+              <drop-container
+                class={this.countClass(p)}
+                stack={this.stack}
+                panel={p}
+                preview={this.preview}
+                active-panel={this.activePanel}
+                common-data={this.commonData}
+                panel-list={p.children}
+                vOn:mousedown_native_stop={() => this.movePanel(p, i)}
+                vOn:click_native_stop={() => this.emitActivePanel(p)} />
+            )
+        })
+        : (
+          <div class="empty-contet panel-items">
+              请拖入组件
+            <div class="empty empty-wrap"></div>
+          </div>
+        )
+    },
     countClass (panel) {
       return [
         'panel-item',
@@ -119,14 +145,16 @@ export default {
         this.$emit(...arguments)
       }
     },
-    enterWrap () {
+    enterWrap (event, panel) {
+      if (this.preview) return
       // console.log('enter-wrap', this.panel)
       this.emitEvent('on-add-stack', {
-        el: this.$el,
-        panel: this.panel
+        el: event.target,
+        panel: panel || this.panel
       })
     },
     leaveWrap () {
+      if (this.preview) return
       // console.log('leave-wrap', this.panel)
       this.emitEvent('on-del-stack', this.panel._id)
     },
@@ -156,14 +184,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// .container-wrap {
-//   position: relative;
-//   z-index: 99;
-// }
 .panel-wrap {
-  // width: 100%;
-  // height: 100%;
-  // overflow: auto;
   background: #fff;
   .panel-item {
     margin-bottom: 14px;
@@ -193,12 +214,6 @@ export default {
       background: rgba(51, 119, 255, .08);
       border: 1px dashed #397AFD;
     }
-    // &:hover {
-    //   border-color: transparent;x
-    //   & > .empty-wrap {
-    //     display: block;
-    //   }
-    // }
     &-active {
       border-color: #397AFD;
       .empty-wrap {
@@ -210,7 +225,7 @@ export default {
       .empty-contet {
         top: 0;
         left: 0;
-        content: "请拖入组件";
+        content: "";
         width: 100%;
         height: 100%;
         cursor: pointer;
