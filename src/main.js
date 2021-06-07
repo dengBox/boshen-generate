@@ -10,11 +10,13 @@ import dayjs from 'dayjs'
 // 按钮权限
 import btnPermissions from '@/directives/btnPermissions.js'
 // 引入公司ui组件
-import shscUI from 'shsc-ui'
-import 'shsc-ui/lib/index.css'
-import shscBusinessUI from 'shsc-business-ui'
-import 'shsc-business-ui/lib/font/style/index'
-import 'shsc-business-ui/lib/index.css'
+import shscUI from '../public/shsc-ui/lib/index.min'
+import '../public/shsc-ui/lib/index.css'
+
+import shscBusinessUI from '../public/shsc-business-ui/lib/index.min'
+import '../public/shsc-business-ui/lib/index.css'
+
+import '../public/shsc-business-ui/lib/font/style/index'
 // 最后引入公共样式
 import './assets/css/base.scss'
 
