@@ -21,8 +21,6 @@
     "file-saver": "^2.0.5",
     "node-sass": "^4.0.0",
     "nprogress": "^0.2.0",
-    "shsc-business-ui": "^1.3.5",
-    "shsc-ui": "^3.4.92",
     "vue": "^2.6.10",
     "vue-i18n": "^8.0.0",
     "vue-router": "^3.1.3",

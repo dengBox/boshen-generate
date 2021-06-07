@@ -5,7 +5,7 @@ Vue.use(VueI18n)
 
 function loadLocaleMessages () {
   const locales = require.context('@/locale', true, /[A-Za-z0-9-_,\s]+\.js$/i)
-  const uiLocales = require.context('shsc-ui/lib/locale/lang', true, /[A-Za-z0-9-_,\s]+\.js$/i)
+  const uiLocales = require.context('../../../public/shsc-ui/lib/locale/lang', true, /[A-Za-z0-9-_,\s]+\.js$/i)
   const messages = {}
   locales.keys().forEach(key => {
     const matched = key.match(/([A-Za-z0-9-_]+)\./i)

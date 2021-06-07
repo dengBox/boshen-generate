@@ -2,7 +2,7 @@
 
 import Vue from 'vue'
 import axios from 'axios'
-import shscUI from 'shsc-ui'
+import shscUI from '../../public/shsc-ui/lib/index.min'
 import router from '../router'
 import { clear } from '@/storage/index'
 import store from '../store'
