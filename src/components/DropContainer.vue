@@ -43,6 +43,7 @@ import { on, off } from '@/assets/js/dom.js'
 export default {
   name: 'DropContainer',
   props: {
+    isPreview: Boolean,
     panel: Object,
     activePanel: Object,
     panelList: Array,
@@ -89,13 +90,17 @@ export default {
   },
   mounted () {
     // 开启事件监听
-    on(this.wrap, 'mouseenter', this.enterWrap)
-    on(this.wrap, 'mouseleave', this.leaveWrap)
+    if (!this.isPreview) {
+      on(this.wrap, 'mouseenter', this.enterWrap)
+      on(this.wrap, 'mouseleave', this.leaveWrap)
+    }
   },
   destroyed () {
     // 关闭事件监听
-    off(this.wrap, 'mouseenter', this.enterWrap)
-    off(this.wrap, 'mouseleave', this.leaveWrap)
+    if (!this.isPreview) {
+      off(this.wrap, 'mouseenter', this.enterWrap)
+      off(this.wrap, 'mouseleave', this.leaveWrap)
+    }
   },
   methods: {
     countClass (panel) {

@@ -103,10 +103,10 @@ export default {
         currencyConfig: this.currencyConfig
       }
       save('userConfig', JSON.stringify(userConfig))
-      let routeData = this.$router.resolve({
-        path: '/workbench/preview'
-      })
-      window.open(routeData.location.path, '_blank')
+      // let routeData = this.$router.resolve({
+      //   path: '/workbench/preview'
+      // })
+      window.open(window.location.origin + '/#/workbench/preview', '_blank')
     },
     // -----------drop panel------------
     dropStart (p) {

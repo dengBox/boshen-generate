@@ -2,6 +2,8 @@
   <div class="preview">
     <header class="preview-header"><Button @click="exportCode">导出源码</Button></header>
     <drop-container
+      is-preview
+      @mousemove.stop.native
       class="panel-wrap"
       :panel="{_id: -1}"
       :activePanel="{}"
