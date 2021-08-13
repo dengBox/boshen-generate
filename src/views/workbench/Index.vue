@@ -106,7 +106,7 @@ export default {
       // let routeData = this.$router.resolve({
       //   path: '/workbench/preview'
       // })
-      window.open(`${window.location.origin}${window.location.pathname}/#/workbench/preview`, '_blank')
+      window.open(`${window.location.origin}${window.location.pathname}#/workbench/preview`, '_blank')
     },
     // -----------drop panel------------
     dropStart (p) {
