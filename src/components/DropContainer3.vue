@@ -76,7 +76,7 @@ export default {
                     common-data={this.commonData}
                     preview={this.preview}
                     panel-list={p.children || []}
-                    {...{ props: p._attrs }} />
+                    {...{ props: p._attrs, on: p._on }} />
                 )
                 : (
                   <drop-container
