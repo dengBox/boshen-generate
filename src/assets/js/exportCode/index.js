@@ -12,10 +12,9 @@ import ReactReplace from './react-plugin'
 import AngularReplace from './angular-plugin'
 import untils from '@/assets/js/until'
 
-const fs = require('fs')
+// const fs = require('fs')
+// const path = new RegExp('^[A-z]:\\\\(.+?\\\\)*$')
 const FileSaver = require('file-saver')
-
-const path = new RegExp('^[A-z]:\\\\(.+?\\\\)*$')
 
 class CodeGenerator {
   constructor ({ sourceCode, exportType } = {}) {
@@ -36,9 +35,10 @@ class CodeGenerator {
       react: new ReactReplace(),
       angular: new AngularReplace()
     }
-    this.code = path.test(sourceCode)
-      ? fs.readFileSync(sourceCode, 'utf8', {})
-      : sourceCode
+    this.code = sourceCode
+    // this.code = path.test(sourceCode)
+    //   ? fs.readFileSync(sourceCode, 'utf8', {})
+    //   : sourceCode
     this._ast = this.toAst()
   }
   // 转换真正方法
